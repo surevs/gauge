@@ -28,6 +28,7 @@ import (
 
 	"github.com/getgauge/common"
 	"github.com/getgauge/gauge/gauge_messages"
+	"github.com/getgauge/gauge/logger"
 	"github.com/golang/protobuf/proto"
 )
 
@@ -96,6 +97,11 @@ func readResponse(conn net.Conn) ([]byte, error) {
 		buffer.Write(data[0:n])
 		messageLength, bytesRead := proto.DecodeVarint(buffer.Bytes())
 		if messageLength > 0 && messageLength < uint64(buffer.Len()) {
+			logger.Infof(true, "Message length is %d\n", messageLength)
+			logger.Infof(true, "Buffer length is %d\n", buffer.Len())
+			logger.Infof(true, "Bytes read: %d\n", bytesRead)
+			logger.Infof(true, "Message length + bytes read = %d\n", messageLength+uint64(bytesRead))
+
 			return buffer.Bytes()[bytesRead : messageLength+uint64(bytesRead)], nil
 		}
 	}

@@ -18,14 +18,15 @@
 package gauge
 
 type Scenario struct {
-	Heading           *Heading
-	Steps             []*Step
-	Comments          []*Comment
-	Tags              *Tags
-	Items             []Item
-	DataTableRow      Table
-	DataTableRowIndex int
-	Span              *Span
+	Heading               *Heading
+	Steps                 []*Step
+	Comments              []*Comment
+	Tags                  *Tags
+	Items                 []Item
+	DataTable             DataTable
+	SpecDataTableRow      Table
+	SpecDataTableRowIndex int
+	Span                  *Span
 }
 
 // Span represents scope of Scenario based on line number
@@ -63,6 +64,11 @@ func (scenario *Scenario) NTags() int {
 func (scenario *Scenario) AddComment(comment *Comment) {
 	scenario.Comments = append(scenario.Comments, comment)
 	scenario.AddItem(comment)
+}
+
+func (scenario *Scenario) AddDataTable(table *Table) {
+	scenario.DataTable.Table = *table
+	scenario.AddItem(&scenario.DataTable)
 }
 
 func (scenario *Scenario) InSpan(lineNumber int) bool {

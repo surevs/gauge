@@ -67,7 +67,7 @@ def readme():
         return readme_file.read()
 
 setup(
-    name='gauge-cli',
+    name='getgauge-cli',
     version=release_ver,
     long_description=readme(),
     long_description_content_type='text/markdown',
